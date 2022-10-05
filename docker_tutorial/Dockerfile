@@ -4,14 +4,18 @@ FROM node
 WORKDIR /app
 # WORKDIR is a directory where all additional files will be executed from
 
-COPY . /app
-# We are copying all files from the main directory (first ".") to the /app directory (subfolder)
-# To copy files to the root directory as well, instead of /app we need to put another "."
-# Eg. COPY . .
+COPY package.json /app/
+# First we are copying package.jason to install it with "npm install" to optimaze
+# (get faster) another image build
 
 RUN npm install
 # After copying all files to /app dir, "npm install" will instal all dependencies from the folder
 # We use RUN for start something in the image
+
+COPY . /app
+# We are copying all files from the main directory (first ".") to the /app directory (subfolder)
+# To copy files to the root directory as well, instead of /app we need to put another "."
+# Eg. COPY . .
 
 EXPOSE 80
 # We are highliting internal docker container port (last line in "server.js")
